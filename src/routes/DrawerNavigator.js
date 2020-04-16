@@ -80,7 +80,7 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         labelStyle={styles.drawerLabel}
         style={styles.drawerItem}
-        label="Contact Us"
+        label="Contact"
         onPress={() => props.navigation.navigate('ContactUs')}
         // icon={() => (
         //   <IconComponent
