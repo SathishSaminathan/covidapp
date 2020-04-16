@@ -62,33 +62,33 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView
       {...props}
       scrollEnabled={false}
-      contentContainerStyle={{flex: 1}}>
+      contentContainerStyle={{flex: 1, paddingTop: '50%'}}>
       {/* <DrawerItemList {...props} /> */}
       <DrawerItem
         labelStyle={styles.drawerLabel}
         style={styles.drawerItem}
         label="Home"
         onPress={() => props.navigation.navigate('Home')}
-        icon={() => (
-          <IconComponent
-            name="home-outline"
-            type={IconType.MaterialCommunityIcons}
-            style={{color: Colors.white, fontSize: 20}}
-          />
-        )}
+        // icon={() => (
+        //   <IconComponent
+        //     name="home-outline"
+        //     type={IconType.MaterialCommunityIcons}
+        //     style={{color: Colors.white, fontSize: 20}}
+        //   />
+        // )}
       />
       <DrawerItem
         labelStyle={styles.drawerLabel}
         style={styles.drawerItem}
         label="Contact Us"
         onPress={() => props.navigation.navigate('ContactUs')}
-        icon={() => (
-          <IconComponent
-            name="home-outline"
-            type={IconType.MaterialCommunityIcons}
-            style={{color: Colors.white, fontSize: 20}}
-          />
-        )}
+        // icon={() => (
+        //   <IconComponent
+        //     name="home-outline"
+        //     type={IconType.MaterialCommunityIcons}
+        //     style={{color: Colors.white, fontSize: 20}}
+        //   />
+        // )}
       />
     </DrawerContentScrollView>
   );
@@ -107,7 +107,7 @@ const DrawerNav = () => {
   const animatedStyle = {borderRadius, transform: [{scale}]};
 
   return (
-    <LinearGradient style={{flex: 1}} colors={[Colors.green, Colors.white]}>
+    <LinearGradient style={{flex: 1}} colors={[Colors.blue, Colors.white]}>
       <Drawer.Navigator
         drawerType="slide"
         overlayColor="transparent"
@@ -149,9 +149,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     // borderWidth: 1,
   },
-  drawerStyles: {flex: 1, width: '50%', backgroundColor: 'transparent'},
+  drawerStyles: {flex: 1, width: '80%', backgroundColor: 'transparent'},
   drawerItem: {alignItems: 'flex-start', marginVertical: 0},
-  drawerLabel: {color: 'white', marginLeft: -16},
+  drawerLabel: {
+    color: 'white',
+    // marginLeft: -16,
+    fontFamily: 'Proxima Nova Bold',
+    fontSize: 30,
+  },
   avatar: {
     borderRadius: 60,
     marginBottom: 16,
