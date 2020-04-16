@@ -1,12 +1,21 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, StatusBar} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  StatusBar,
+  TouchableNativeFeedback,
+} from 'react-native';
 
 import {Colors} from '../constants/ThemeConstants';
 import Axios from 'axios';
 import TextComponent from '../components/Shared/TextComponent';
-import {getPartOfTheDay} from '../helpers/validationHelper';
+import {getPartOfTheDay, currencyFormat} from '../helpers/validationHelper';
 import {FontType} from '../constants/AppConstants';
 import Svg, {Path} from 'react-native-svg';
+import Ripple from 'react-native-material-ripple';
+import LottieAnimation from '../components/Shared/LottieAnimation';
+import {LottieFile} from '../assets/lottie';
 
 const values = ['confirmed', 'recovered', 'deaths'];
 export default class Home extends Component {
@@ -26,7 +35,7 @@ export default class Home extends Component {
   getGlobalData = () => {
     Axios.get('https://covid19.mathdro.id/api')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.setState({
           confirmed: res.data.confirmed.value,
           recovered: res.data.recovered.value,
@@ -37,6 +46,7 @@ export default class Home extends Component {
         console.log(err);
       });
   };
+
   render() {
     const {confirmed, recovered, deaths} = this.state;
     return (
@@ -59,35 +69,52 @@ export default class Home extends Component {
             // fillOpacity={0.5}
           />
         </Svg>
-        <ScrollView style={{padding: 10}}>
+        <View style={{paddingTop: "10%", paddingLeft:20}}>
           <TextComponent
             style={{fontSize: 25, color: Colors.white}}
             type={FontType.BOLD}>
             Good {getPartOfTheDay()}!
           </TextComponent>
-
+          <TextComponent
+            style={{fontSize: 12, color: Colors.white}}
+            type={FontType.BOLD}>
+            All cases update
+          </TextComponent>
+        </View>
+        <ScrollView contentContainerStyle={{padding: 10, flexGrow: 1}}>
           <View
             style={{
-              marginTop: "30%",
+              marginTop: 10,
               flexDirection: 'row',
               flexWrap: 'wrap',
               paddingTop: 10,
               justifyContent: 'space-around',
             }}>
-            {values.map((v, i) => (
-              <View
-                key={i}
-                style={{
-                  width: '45%',
-                  height: 200,
-                  borderRadius: 15,
-                  backgroundColor: Colors.white,
-                  elevation: 10,
-                  marginBottom: 10,
-                }}>
-                <TextComponent>{this.state[v]}</TextComponent>
-              </View>
-            ))}
+            {confirmed &&
+              recovered &&
+              deaths &&
+              values.map((v, i) => (
+                <Ripple
+                  rippleContainerBorderRadius={15}
+                  key={i}
+                  style={{
+                    width: '45%',
+                    height: 200,
+                    borderRadius: 15,
+                    backgroundColor: Colors.white,
+                    elevation: 10,
+                    marginBottom: 10,
+                  }}>
+                  <View>
+                    <TextComponent>
+                      {currencyFormat(this.state[v])}
+                    </TextComponent>
+                  </View>
+                </Ripple>
+              ))}
+          </View>
+          <View style={{height: 300}}>
+            <LottieAnimation file={LottieFile.Istayathome} />
           </View>
         </ScrollView>
       </View>

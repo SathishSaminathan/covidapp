@@ -9,10 +9,11 @@ import EmptyKart from "../../assets/lottie/4496-empty-cart.json";
 import EmptySearch from "../../assets/lottie/10223-search-empty.json";
 import Network from "../../assets/lottie/1408-network-lost.json";
 import StayHome from "../../assets/lottie/19110-stay-home-enjoy-your-coffee.json";
+import { LottieFile } from "../../assets/lottie";
 
 // import AppConstants from "../../../constants/AppConstants.js";
 
-export default function LottieAnimation({ name }) {
+export default function LottieAnimation({ file = LottieFile.Stayhomeandenjoycofee }) {
   // const getLottie = name => {
   //   switch (name) {
   //     case AppConstants.ASK_TO_LOGIN:
@@ -31,7 +32,7 @@ export default function LottieAnimation({ name }) {
   // };
   return (
     <View style={{ flex: 1 }}>
-      <LottieView source={StayHome} autoPlay loop />
+      <LottieView source={file} autoPlay loop />
     </View>
   );
 }
