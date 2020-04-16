@@ -200,7 +200,7 @@ export default class Home extends Component {
                   Check by country
                 </TextComponent>
                 <TextComponent style={{color: Colors.searchText}}>
-                  Find out how many people have confirmed cases in your country.
+                  Find out how many people have confirmed cases in your country
                 </TextComponent>
               </View>
               <View
