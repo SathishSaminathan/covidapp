@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
-    }, 1000);
+    }, 3000);
   }, []);
   return (
     <View style={{flex: 1, backgroundColor: Colors.white}}>
