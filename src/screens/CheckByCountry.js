@@ -52,7 +52,7 @@ const India = () => {
       {State && (
         <View>
           {res.map((v, i) => (
-            <View style={{paddingVertical: 15}} key={i}>
+            <View style={{paddingTop: 15}} key={i}>
               <TextComponent style={{fontSize: 15}} type={FontType.BOLD}>
                 {startCase(v)}
               </TextComponent>
@@ -173,7 +173,7 @@ const Other = () => {
         {State && (
           <View>
             {res.map((v, i) => (
-              <View style={{paddingVertical: 15}} key={i}>
+              <View style={{paddingTop: 15}} key={i}>
                 <TextComponent style={{fontSize: 15}} type={FontType.BOLD}>
                   {startCase(v)}
                 </TextComponent>
