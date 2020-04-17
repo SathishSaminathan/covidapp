@@ -11,6 +11,7 @@ import {FontType, IconType} from '../constants/AppConstants';
 import Axios from 'axios';
 import {currencyFormat} from '../helpers/validationHelper';
 import IconComponent from '../components/Shared/IconComponent';
+import MenuIcon from '../components/Shared/MenuIcon';
 
 const names = ['INDIA', 'OTHER'];
 
@@ -202,6 +203,13 @@ export default class CheckByCountry extends Component {
     const {activeMenu} = this.state;
     return (
       <LinearGradient style={{flex: 1}} colors={[Colors.blue, Colors.white]}>
+        <View>
+          <MenuIcon
+            {...this.props}
+            onPress={() => this.props.navigation.goBack()}
+            back
+          />
+        </View>
         <View style={{flex: 9}}>
           <ScrollView
             contentContainerStyle={{
