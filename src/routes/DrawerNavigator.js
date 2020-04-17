@@ -29,27 +29,43 @@ const MyStack = ({navigation, style}) => {
     <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
       <Stack.Navigator
         headerMode="none"
-        screenOptions={
-          {
-            // headerTransparent: true,
-            // headerTitle: null,
-            // headerLeft: () => (
-            //   <Button title="Menu" onPress={() => navigation.openDrawer()} />
-            // ),
-          }
-        }>
+        screenOptions={{
+          cardOverlayEnabled: true,
+          cardStyleInterpolator: ({current: {progress}}) => ({
+            cardStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 0.5, 0.9, 1],
+                outputRange: [0, 0.25, 0.7, 1],
+              }),
+            },
+          }),
+        }}
+        // screenOptions={
+        //   {
+        //     headerTransparent: true,
+        //     headerTitle: null,
+        //     headerLeft: () => (
+        //       <Button title="Menu" onPress={() => navigation.openDrawer()} />
+        //     ),
+        //   }
+        // }
+      >
         <Stack.Screen
           name="Home"
-          options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          }}>
+          options={
+            {
+              // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }
+          }>
           {(props) => <Home {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name="ContactUs"
-          options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          }}>
+          options={
+            {
+              // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }
+          }>
           {(props) => <ContactUs {...props} />}
         </Stack.Screen>
       </Stack.Navigator>

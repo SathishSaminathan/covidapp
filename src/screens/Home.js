@@ -71,7 +71,7 @@ export default class Home extends Component {
           style={{
             position: 'absolute',
             top: 20,
-            zIndex: 0,
+            zIndex: -1,
             transform: [{rotateY: '180deg'}],
           }}>
           <Path
@@ -213,6 +213,17 @@ export default class Home extends Component {
               </View>
             </View>
           </Ripple>
+
+          <View
+            style={{
+              // backgroundColor: Colors.red,
+              marginTop: 20,
+              paddingLeft: 10,
+            }}>
+            <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
+              We recommend
+            </TextComponent>
+          </View>
           {/* <View style={{height: 300}}>
             <LottieAnimation file={LottieFile.Istayathome} />
           </View> */}
