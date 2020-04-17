@@ -20,6 +20,7 @@ import ContactUs from '../screens/Contact';
 import TextComponent from '../components/Shared/TextComponent';
 import IconComponent from '../components/Shared/IconComponent';
 import {IconType} from '../constants/AppConstants';
+import CheckByCountry from '../screens/CheckByCountry';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -67,6 +68,15 @@ const MyStack = ({navigation, style}) => {
             }
           }>
           {(props) => <ContactUs {...props} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="CheckByCountry"
+          options={
+            {
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }
+          }>
+          {(props) => <CheckByCountry {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </Animated.View>

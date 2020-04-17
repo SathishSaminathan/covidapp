@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-const MeniIcon = ({navigation}) => (
+const MenuIcon = ({navigation}) => (
   <View
     style={{
       height: 50,
@@ -30,4 +30,4 @@ const MeniIcon = ({navigation}) => (
   </View>
 );
 
-export default MeniIcon;
+export default MenuIcon;

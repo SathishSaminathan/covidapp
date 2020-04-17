@@ -20,10 +20,12 @@ import LottieAnimation from '../components/Shared/LottieAnimation';
 import {LottieFile} from '../assets/lottie';
 import MeniIcon from '../components/Shared/MenuIcon';
 import IconComponent from '../components/Shared/IconComponent';
+import moment from 'moment';
 
 const values = [
   {name: 'recovered', icon: 'account-check-outline'},
   {name: 'confirmed', icon: 'account-alert-outline'},
+  {name: 'critical', icon: 'account-outline'},
   {name: 'deaths', icon: 'account-outline'},
 ];
 
@@ -35,6 +37,8 @@ export default class Home extends Component {
       confirmed: null,
       recovered: null,
       deaths: null,
+      updated: null,
+      critical: null,
     };
   }
 
@@ -43,13 +47,27 @@ export default class Home extends Component {
   }
 
   getGlobalData = () => {
-    Axios.get('https://covid19.mathdro.id/api')
+    // Axios.get('https://covid19.mathdro.id/api')
+    //   .then((res) => {
+    //     // console.log(res);
+    //     this.setState({
+    //       confirmed: res.data.confirmed.value,
+    //       recovered: res.data.recovered.value,
+    //       deaths: res.data.deaths.value,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    Axios.get('https://corona.lmao.ninja/v2/all')
       .then((res) => {
         // console.log(res);
         this.setState({
-          confirmed: res.data.confirmed.value,
-          recovered: res.data.recovered.value,
-          deaths: res.data.deaths.value,
+          confirmed: res.data.cases,
+          recovered: res.data.recovered,
+          deaths: res.data.deaths,
+          updated: res.data.updated,
+          critical: res.data.critical,
         });
       })
       .catch((err) => {
@@ -58,7 +76,7 @@ export default class Home extends Component {
   };
 
   render() {
-    const {confirmed, recovered, deaths} = this.state;
+    const {confirmed, recovered, deaths, updated, critical} = this.state;
     return (
       <View style={{flex: 1, backgroundColor: Colors.blue}}>
         <MeniIcon {...this.props} />
@@ -70,7 +88,7 @@ export default class Home extends Component {
           height="100%"
           style={{
             position: 'absolute',
-            top: 20,
+            top: 60,
             zIndex: -1,
             transform: [{rotateY: '180deg'}],
           }}>
@@ -91,6 +109,13 @@ export default class Home extends Component {
             type={FontType.BOLD}>
             All cases update
           </TextComponent>
+          {updated && (
+            <TextComponent
+              style={{fontSize: 12, color: Colors.white}}
+              type={FontType.BOLD}>
+              Last update {moment(updated).fromNow()}
+            </TextComponent>
+          )}
         </View>
         <ScrollView contentContainerStyle={{padding: 10, flexGrow: 1}}>
           <View
@@ -162,6 +187,7 @@ export default class Home extends Component {
               ))}
           </View>
           <Ripple
+            onPress={() => this.props.navigation.navigate('CheckByCountry')}
             rippleContainerBorderRadius={borderRadius}
             style={{
               // backgroundColor: Colors.red,
