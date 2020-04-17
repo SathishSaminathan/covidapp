@@ -194,7 +194,7 @@ export default class CheckByCountry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeMenu: names[1],
+      activeMenu: names[0],
     };
   }
 
