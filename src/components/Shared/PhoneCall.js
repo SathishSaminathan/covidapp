@@ -1,9 +1,9 @@
 import call from 'react-native-phone-call';
 
 export default class PhoneCall {
-  makeCall() {
+  makeCall(number = '8012941249') {
     const args = {
-      number: '8012941249', // String value with the number to call
+      number, // String value with the number to call
       prompt: false, // Optional boolean property. Determines if the user should be prompt prior to the call
     };
 

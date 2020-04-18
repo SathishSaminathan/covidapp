@@ -24,6 +24,9 @@ import ImageComponent from '../components/Shared/ImageComponent';
 import moment from 'moment';
 import {Images} from '../assets/images';
 import CoronaVideos from './CoronaVideos';
+import PMFundArea from './PMFundArea';
+import ButtonComponent from '../components/Shared/ButtonComponent';
+import Helpline from './Helpline';
 
 const values = [
   {name: 'recovered', icon: 'account-check-outline'},
@@ -189,6 +192,23 @@ export default class Home extends Component {
                 </View>
               ))}
           </View>
+          <View
+            style={{
+              paddingVertical: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+            }}>
+            <View style={{width: '90%'}}>
+              <ButtonComponent
+                style={{
+                  backgroundColor: Colors.deaths,
+                  fontSize: 12,
+                  color: Colors.white,
+                }}>
+                Lets fight against CORONA
+              </ButtonComponent>
+            </View>
+          </View>
           <Ripple
             onPress={() => this.props.navigation.navigate('CheckByCountry')}
             rippleContainerBorderRadius={borderRadius}
@@ -298,6 +318,35 @@ export default class Home extends Component {
           </Ripple>
           <View style={{padding: 10}}>
             <CoronaVideos />
+          </View>
+          <View style={{padding: 10}}>
+            <Helpline />
+          </View>
+          <View style={{padding: 10}}>
+            <PMFundArea />
+          </View>
+          <View style={{paddingVertical: 10}}>
+            <View style={{height: 250}}>
+              <ImageComponent source={Images.protective} resizeMode="contain" />
+            </View>
+          </View>
+          <View style={{paddingVertical: 10}}>
+            <View style={{height: 350}}>
+              <ImageComponent
+                source={Images.protective1}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <View style={{paddingVertical: 10}}>
+            <View style={{flex: 1}}>
+              <View style={{height: 60}}>
+                <ImageComponent source={Images.gov} resizeMode="contain" />
+              </View>
+              <TextComponent style={{alignSelf: 'center'}} type={FontType.BOLD}>
+                Thanks to Gov. of India
+              </TextComponent>
+            </View>
           </View>
           {/* <View
             style={{

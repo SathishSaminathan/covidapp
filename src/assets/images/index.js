@@ -92,4 +92,7 @@ export const Images = {
   hotel: require('./hotel.jpeg'),
   silver: require('./silver.png'),
   followins: require('./followins.png'),
+  gov: require('./gov.png'),
+  protective: require('./protective.jpg'),
+  protective1: require('./protective1.jpg'),
 };

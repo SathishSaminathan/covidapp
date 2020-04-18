@@ -435,10 +435,16 @@ export default class CheckByCountry extends Component {
                 }}>
                 <View>
                   <TextComponent
-                    style={{
-                      color: activeMenu === v ? Colors.blue : Colors.themeBlack,
-                      fontSize: 18,
-                    }}
+                    style={[
+                      {
+                        color:
+                          activeMenu === v ? Colors.blue : Colors.themeBlack,
+                        fontSize: 18,
+                      },
+                      activeMenu === v && {
+                        textDecorationLine: 'underline',
+                      },
+                    ]}
                     type={activeMenu === v ? FontType.BOLD : FontType.BOLD}>
                     {startCase(v.toLowerCase())}
                   </TextComponent>
