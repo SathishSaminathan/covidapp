@@ -26,81 +26,13 @@ const dateFormat = 'DD/MM/YYYY';
 
 const res = ['confirmed', 'recovered', 'deaths'];
 
-const India = () => {
+const India = ({data = null, obj = null}) => {
   const [State, setState] = useState();
-  const [Data, setData] = useState(null);
+  const [Data, setData] = useState(data);
   useEffect(() => {
-    getData();
-    getDistrictWise();
-  }, []);
-  const getData = () => {
-    Axios.get('https://covid19.mathdro.id/api/countries/INDIA')
-      .then((res) => {
-        setState({
-          confirmed: res.data.confirmed.value,
-          recovered: res.data.recovered.value,
-          deaths: res.data.deaths.value,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const getDistrictWise = () => {
-    Axios.get('https://v1.api.covindia.com/district-date-total-data')
-      .then((res) => {
-        let lastFiveDays = Array(5)
-          .fill('')
-          .map((v, i) => moment().subtract(i, 'd').format('DD/MM/YYYY'));
-        // console.log(
-        //   lastFiveDays.map((date) => {
-        //     return {
-        //       date,
-        //       data: res.data[date],
-        //     };
-        //   }),
-        // );
-        let availableDates = Object.keys(res.data);
-        let moments = availableDates.map((d) => moment(d, dateFormat));
-        let maxDate = moment.max(moments).format(dateFormat);
-        constructData(maxDate, res.data);
-        // let keys = Object.keys(res.data);
-        // let data = Object.values(res.data);
-        // let temp = keys.map((key, i) => {
-        //   return {
-        //     date: key,
-        //     // data: {
-        //     //   state: Object.keys(data[i]).map((name, j) => {
-        //     //     return {
-        //     //       name,
-        //     //       data: Object.values(data[i])[j],
-        //     //     };
-        //     //   }),
-        //     // },
-        //   };
-        // });
-        // setData(temp);
-        // console.log(temp);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const constructData = (date, data) => {
-    let todayData = data[moment().format('DD/MM/YYYY')];
-    var arr = Object.keys(todayData).map(function (key) {
-      return {state: key, data: todayData[key]};
-    });
-    // console.clear();
-    let ArrayLength = arr.length;
-    arr.splice(ArrayLength - 3, 3);
-
-    setData({
-      data: arr.sort((a, b) => a.data.infected < b.data.infected),
-      date,
-    });
-  };
+    setData(data);
+    setState(obj);
+  }, [data, obj]);
 
   return Data ? (
     <ScrollView
@@ -350,11 +282,92 @@ export default class CheckByCountry extends Component {
     super(props);
     this.state = {
       activeMenu: names[0],
+      data: null,
+      obj: null,
     };
   }
 
+  componentDidMount() {
+    this.getDistrictWise();
+    this.getData();
+  }
+
+  getData = () => {
+    Axios.get('https://covid19.mathdro.id/api/countries/INDIA')
+      .then((res) => {
+        this.setState({
+          obj: {
+            confirmed: res.data.confirmed.value,
+            recovered: res.data.recovered.value,
+            deaths: res.data.deaths.value,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getDistrictWise = () => {
+    Axios.get('https://v1.api.covindia.com/district-date-total-data')
+      .then((res) => {
+        let lastFiveDays = Array(5)
+          .fill('')
+          .map((v, i) => moment().subtract(i, 'd').format('DD/MM/YYYY'));
+        // console.log(
+        //   lastFiveDays.map((date) => {
+        //     return {
+        //       date,
+        //       data: res.data[date],
+        //     };
+        //   }),
+        // );
+        let availableDates = Object.keys(res.data);
+        let moments = availableDates.map((d) => moment(d, dateFormat));
+        let maxDate = moment.max(moments).format(dateFormat);
+        this.constructData(maxDate, res.data);
+        // let keys = Object.keys(res.data);
+        // let data = Object.values(res.data);
+        // let temp = keys.map((key, i) => {
+        //   return {
+        //     date: key,
+        //     // data: {
+        //     //   state: Object.keys(data[i]).map((name, j) => {
+        //     //     return {
+        //     //       name,
+        //     //       data: Object.values(data[i])[j],
+        //     //     };
+        //     //   }),
+        //     // },
+        //   };
+        // });
+        // setData(temp);
+        // console.log(temp);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  constructData = (date, data) => {
+    let todayData = data[moment().format('DD/MM/YYYY')];
+    var arr = Object.keys(todayData).map(function (key) {
+      return {state: key, data: todayData[key]};
+    });
+    // console.clear();
+    let ArrayLength = arr.length;
+    arr.splice(ArrayLength - 3, 3);
+
+    this.setState({
+      data: {
+        data: arr.sort((a, b) => a.data.infected < b.data.infected),
+        date,
+      },
+    });
+  };
+
   render() {
-    const {activeMenu} = this.state;
+    const {activeMenu, data, obj} = this.state;
     return (
       <LinearGradient style={{flex: 1}} colors={[Colors.blue, Colors.white]}>
         {/* <View> */}
@@ -372,7 +385,11 @@ export default class CheckByCountry extends Component {
               // justifyContent: 'center',
               //   backgroundColor: 'yellow',
             }}>
-            {activeMenu === names[0] ? <India /> : <Other />}
+            {activeMenu === names[0] ? (
+              <India data={data} obj={obj} />
+            ) : (
+              <Other />
+            )}
           </ScrollView>
         </View>
         <View

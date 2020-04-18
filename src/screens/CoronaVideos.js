@@ -8,9 +8,8 @@ import {FontType} from '../constants/AppConstants';
 import {Colors} from '../constants/ThemeConstants';
 
 const videos = [
-  {link: '8c_UJwLq8PI'},
+  {link: 'Q-Iy7ccCpS4'},
   {link: 'lhYAxIc1xUc'},
-  {link: '8c_UJwLq8PI'},
   {link: '8c_UJwLq8PI'},
 ];
 
@@ -20,6 +19,7 @@ const CoronaVideos = ({params}) => (
       Corona related videos
     </TextComponent>
     <FlatList
+     keyExtractor={(item, index) => index.toString()}
       ItemSeparatorComponent={() => (
         <View
           style={{
@@ -33,7 +33,7 @@ const CoronaVideos = ({params}) => (
       renderItem={({item}) => (
         <WebView
         //   javaScriptEnabled
-          style={{height: 250}}
+          style={{height: 220}}
           source={{
             uri: `https://www.youtube.com/embed/${item.link}?version=3&enablejsapi=1&rel=0&autoplay=1&showinfo=0&controls=1&modestbranding=0"`,
           }}
