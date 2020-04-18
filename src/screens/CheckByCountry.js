@@ -357,13 +357,13 @@ export default class CheckByCountry extends Component {
     const {activeMenu} = this.state;
     return (
       <LinearGradient style={{flex: 1}} colors={[Colors.blue, Colors.white]}>
-        <View>
-          <MenuIcon
-            {...this.props}
-            onPress={() => this.props.navigation.goBack()}
-            back
-          />
-        </View>
+        {/* <View> */}
+        <MenuIcon
+          {...this.props}
+          onPress={() => this.props.navigation.goBack()}
+          back
+        />
+        {/* </View> */}
         <View style={{flex: 9}}>
           <ScrollView
             contentContainerStyle={{

@@ -2,14 +2,17 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import IconComponent from './IconComponent';
-import {IconType} from '../../constants/AppConstants';
+import {IconType, FontType} from '../../constants/AppConstants';
+import TextComponent from './TextComponent';
 
-const MenuIcon = ({navigation, onPress, back = false}) => (
+const MenuIcon = ({navigation, onPress, back = false, title = null}) => (
   <View
     style={{
       height: 50,
       paddingTop: '5%',
       paddingLeft: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
     }}>
     <TouchableOpacity
       activeOpacity={1}
@@ -40,6 +43,13 @@ const MenuIcon = ({navigation, onPress, back = false}) => (
         />
       )}
     </TouchableOpacity>
+    {title && (
+      <TextComponent
+        type={FontType.BOLD}
+        style={{fontSize: 20, paddingLeft: 10, color: Colors.white}}>
+        {title}
+      </TextComponent>
+    )}
   </View>
 );
 

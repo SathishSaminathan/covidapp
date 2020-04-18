@@ -91,4 +91,5 @@ export const Images = {
   bed2: require('./bed2.jpeg'),
   hotel: require('./hotel.jpeg'),
   silver: require('./silver.png'),
+  followins: require('./followins.png'),
 };

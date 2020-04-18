@@ -21,6 +21,7 @@ import TextComponent from '../components/Shared/TextComponent';
 import IconComponent from '../components/Shared/IconComponent';
 import {IconType} from '../constants/AppConstants';
 import CheckByCountry from '../screens/CheckByCountry';
+import WeRecommend from '../screens/WeRecommend';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -77,6 +78,15 @@ const MyStack = ({navigation, style}) => {
             }
           }>
           {(props) => <CheckByCountry {...props} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="WeRecommend"
+          options={
+            {
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }
+          }>
+          {(props) => <WeRecommend {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </Animated.View>

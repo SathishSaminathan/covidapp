@@ -20,7 +20,10 @@ import LottieAnimation from '../components/Shared/LottieAnimation';
 import {LottieFile} from '../assets/lottie';
 import MeniIcon from '../components/Shared/MenuIcon';
 import IconComponent from '../components/Shared/IconComponent';
+import ImageComponent from '../components/Shared/ImageComponent';
 import moment from 'moment';
+import {Images} from '../assets/images';
+import CoronaVideos from './CoronaVideos';
 
 const values = [
   {name: 'recovered', icon: 'account-check-outline'},
@@ -241,7 +244,7 @@ export default class Home extends Component {
           </Ripple>
 
           <Ripple
-            onPress={() => this.props.navigation.navigate('CheckByCountry')}
+            onPress={() => this.props.navigation.navigate('WeRecommend')}
             rippleContainerBorderRadius={borderRadius}
             style={{
               // backgroundColor: Colors.red,
@@ -257,26 +260,30 @@ export default class Home extends Component {
                 // elevation: 10,
                 borderRadius,
                 flexDirection: 'row',
+                overflow: 'hidden',
                 flex: 1,
               }}>
               <View
                 style={{
                   flex: 3,
-                  // alignItems: 'center',
-                  // justifyContent: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
-                <View style={{height: '100%'}}>
-                  <LottieAnimation height={70} file={LottieFile.consultation} />
+                <View style={{height: '100%', width: '70%'}}>
+                  <ImageComponent source={Images.followins} />
                 </View>
               </View>
               <View
                 style={{
                   flex: 5,
-                  justifyContent: 'space-around',
+                  // justifyContent: 'space-around',
                   paddingVertical: 10,
                 }}>
                 <TextComponent type={FontType.BOLD} style={{fontSize: 14}}>
                   Follow our instructions
+                </TextComponent>
+                <TextComponent style={{color: Colors.searchText}}>
+                  To prevent the spread of the coronavirus disease
                 </TextComponent>
               </View>
               <View
@@ -289,7 +296,9 @@ export default class Home extends Component {
               </View>
             </View>
           </Ripple>
-
+          <View style={{padding: 10}}>
+            <CoronaVideos />
+          </View>
           {/* <View
             style={{
               // backgroundColor: Colors.red,
