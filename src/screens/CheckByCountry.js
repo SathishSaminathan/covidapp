@@ -386,8 +386,7 @@ export default class CheckByCountry extends Component {
               //   backgroundColor: 'yellow',
             }}>
             <>
-              <View style={{flex:1, 
-                  opacity: activeMenu === names[0] ? 1 : 0,}}>
+              <View style={{flex: 1, opacity: activeMenu === names[0] ? 1 : 0}}>
                 <India data={data} obj={obj} />
               </View>
               <View
