@@ -127,7 +127,10 @@ const Helpline = ({params}) => {
   return (
     <View>
       <TextComponent style={{fontSize: 15}} type={FontType.BOLD}>
-        Central Helpline Number: +91-11-23978046
+        Central Helpline Number:{' '}
+        <TextComponent onPress={() => Call.makeCall('+91-11-23978046')}>
+          +91-11-23978046
+        </TextComponent>
       </TextComponent>
       <TextComponent
         style={{fontSize: 11, paddingBottom: 10, color: Colors.searchText}}

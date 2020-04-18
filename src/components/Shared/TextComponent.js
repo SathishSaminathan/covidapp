@@ -3,9 +3,9 @@ import {Text} from 'react-native';
 
 import {FontType} from '../../constants/AppConstants';
 
-const TextComponent = props => {
-  const {children, style, type} = props;
-  const getFontFamily = type => {
+const TextComponent = (props) => {
+  const {children, style, type, onPress} = props;
+  const getFontFamily = (type) => {
     switch (type) {
       case FontType.REGULAR:
         return 'Proxima Nova Regular';
@@ -20,6 +20,7 @@ const TextComponent = props => {
   };
   return (
     <Text
+      onPress={() => onPress && onPress()}
       {...props}
       style={[
         {

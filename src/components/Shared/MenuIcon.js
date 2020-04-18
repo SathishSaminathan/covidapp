@@ -8,7 +8,7 @@ import TextComponent from './TextComponent';
 const MenuIcon = ({navigation, onPress, back = false, title = null}) => (
   <View
     style={{
-      height: 50,
+      height: 80,
       paddingTop: '5%',
       paddingLeft: 20,
       flexDirection: 'row',
