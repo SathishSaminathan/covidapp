@@ -1,5 +1,11 @@
 import React, {Component, useEffect, useState} from 'react';
-import {Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {startCase} from 'lodash';
 import RNPickerSelect from 'react-native-picker-select';
@@ -12,15 +18,20 @@ import Axios from 'axios';
 import {currencyFormat} from '../helpers/validationHelper';
 import IconComponent from '../components/Shared/IconComponent';
 import MenuIcon from '../components/Shared/MenuIcon';
+import moment from 'moment';
 
 const names = ['INDIA', 'OTHER'];
+
+const dateFormat = 'DD/MM/YYYY';
 
 const res = ['confirmed', 'recovered', 'deaths'];
 
 const India = () => {
   const [State, setState] = useState();
+  const [Data, setData] = useState(null);
   useEffect(() => {
     getData();
+    getDistrictWise();
   }, []);
   const getData = () => {
     Axios.get('https://covid19.mathdro.id/api/countries/INDIA')
@@ -35,36 +46,176 @@ const India = () => {
         console.log(err);
       });
   };
-  return (
-    <View
-      style={{
+  const getDistrictWise = () => {
+    Axios.get('https://v1.api.covindia.com/district-date-total-data')
+      .then((res) => {
+        let lastFiveDays = Array(5)
+          .fill('')
+          .map((v, i) => moment().subtract(i, 'd').format('DD/MM/YYYY'));
+        // console.log(
+        //   lastFiveDays.map((date) => {
+        //     return {
+        //       date,
+        //       data: res.data[date],
+        //     };
+        //   }),
+        // );
+        let availableDates = Object.keys(res.data);
+        let moments = availableDates.map((d) => moment(d, dateFormat));
+        let maxDate = moment.max(moments).format(dateFormat);
+        constructData(maxDate, res.data);
+        // let keys = Object.keys(res.data);
+        // let data = Object.values(res.data);
+        // let temp = keys.map((key, i) => {
+        //   return {
+        //     date: key,
+        //     // data: {
+        //     //   state: Object.keys(data[i]).map((name, j) => {
+        //     //     return {
+        //     //       name,
+        //     //       data: Object.values(data[i])[j],
+        //     //     };
+        //     //   }),
+        //     // },
+        //   };
+        // });
+        // setData(temp);
+        // console.log(temp);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const constructData = (date, data) => {
+    let todayData = data[moment().format('DD/MM/YYYY')];
+    var arr = Object.keys(todayData).map(function (key) {
+      return {state: key, data: todayData[key]};
+    });
+    // console.clear();
+    let ArrayLength = arr.length;
+    arr.splice(ArrayLength - 3, 3);
+
+    setData({
+      data: arr.sort((a, b) => a.data.infected < b.data.infected),
+      date,
+    });
+  };
+
+  return Data ? (
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        // backgroundColor: 'red',
         width: '90%',
-        backgroundColor: Colors.white,
-        borderRadius: 10,
-        padding: 10,
-        height: '55%',
-        elevation: 10,
-        // alignItems: 'center',
+        alignSelf: 'center',
+        paddingTop: '10%',
       }}>
-      <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
-        Across India
-      </TextComponent>
-      {State && (
-        <View>
-          {res.map((v, i) => (
-            <View style={{paddingTop: 15}} key={i}>
-              <TextComponent style={{fontSize: 15}} type={FontType.BOLD}>
-                {startCase(v)}
-              </TextComponent>
-              <TextComponent
-                style={{fontSize: 30, paddingVertical: 5, color: Colors[v]}}
-                type={FontType.BOLD}>
-                {currencyFormat(State[v])}
+      <View
+        style={{
+          // width: '90%',
+          backgroundColor: Colors.white,
+          borderRadius: 10,
+          padding: 10,
+          // height: '55%',
+          // elevation: 10,
+          // alignItems: 'center',
+        }}>
+        <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
+          Across India
+        </TextComponent>
+        {State && (
+          <View>
+            {res.map((v, i) => (
+              <View style={{paddingTop: 15}} key={i}>
+                <TextComponent style={{fontSize: 15}} type={FontType.BOLD}>
+                  {startCase(v)}
+                </TextComponent>
+                <TextComponent
+                  style={{fontSize: 30, paddingVertical: 5, color: Colors[v]}}
+                  type={FontType.BOLD}>
+                  {currencyFormat(State[v])}
+                </TextComponent>
+              </View>
+            ))}
+          </View>
+        )}
+      </View>
+
+      {Data && (
+        <View
+          style={{
+            marginTop: 20,
+            backgroundColor: Colors.white,
+            padding: 10,
+            borderRadius: 10,
+          }}>
+          <TextComponent
+            style={{fontSize: 25, paddingVertical: 5}}
+            type={FontType.BOLD}>
+            {Data.date}
+          </TextComponent>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 5}}>
+              <TextComponent type={FontType.BOLD} style={{fontSize: 15}}>
+                Location
               </TextComponent>
             </View>
-          ))}
+            <View style={{flex: 3}}>
+              <TextComponent style={{color: Colors.blue}}>
+                Infected
+              </TextComponent>
+            </View>
+            <View style={{flex: 2}}>
+              <TextComponent style={{color: Colors.deaths}}>
+                Death
+              </TextComponent>
+            </View>
+          </View>
+          {Data.data &&
+            Data.data.map((list, i) => (
+              <View
+                key={i}
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  paddingVertical: 10,
+                  borderBottomWidth: 0.5,
+                  borderBottomColor: Colors.accDividerColor,
+                }}>
+                <View style={{flex: 5}}>
+                  <TextComponent type={FontType.BOLD}>
+                    {list.state}
+                  </TextComponent>
+                </View>
+                <View style={{flex: 3}}>
+                  <TextComponent style={{color: Colors.blue}}>
+                    {list.data.infected}
+                  </TextComponent>
+                </View>
+                <View style={{flex: 2}}>
+                  <TextComponent style={{color: Colors.deaths}}>
+                    {list.data.dead}
+                  </TextComponent>
+                </View>
+                {/* {list.data &&
+              list.data.state.map((value, i) => (
+                <TextComponent key={i}>{value.name}</TextComponent>
+              ))} */}
+              </View>
+            ))}
         </View>
       )}
+    </ScrollView>
+  ) : (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: Colors.transparent,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <ActivityIndicator size="large" color={Colors.blue} />
     </View>
   );
 };
@@ -112,7 +263,10 @@ const Other = () => {
       style={{
         width: '90%',
         height: '55%',
+        alignSelf: 'center',
         borderRadius: 10,
+        paddingTop: 20,
+        // paddingTop: '10%',
       }}>
       {/* <TextComponent>Other</TextComponent> */}
       <View style={{backgroundColor: Colors.white, marginBottom: 10}}>
@@ -214,8 +368,8 @@ export default class CheckByCountry extends Component {
           <ScrollView
             contentContainerStyle={{
               flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
+              // alignItems: 'center',
+              // justifyContent: 'center',
               //   backgroundColor: 'yellow',
             }}>
             {activeMenu === names[0] ? <India /> : <Other />}

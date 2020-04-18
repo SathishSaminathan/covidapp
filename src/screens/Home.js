@@ -240,16 +240,72 @@ export default class Home extends Component {
             </View>
           </Ripple>
 
-          <View
+          <Ripple
+            onPress={() => this.props.navigation.navigate('CheckByCountry')}
+            rippleContainerBorderRadius={borderRadius}
+            style={{
+              // backgroundColor: Colors.red,
+              height: 80,
+              elevation: 10,
+              marginTop: 20,
+              borderRadius,
+            }}>
+            <View
+              style={{
+                backgroundColor: Colors.white,
+                height: 80,
+                // elevation: 10,
+                borderRadius,
+                flexDirection: 'row',
+                flex: 1,
+              }}>
+              <View
+                style={{
+                  flex: 3,
+                  // alignItems: 'center',
+                  // justifyContent: 'center',
+                }}>
+                <View style={{height: '100%'}}>
+                  <LottieAnimation height={70} file={LottieFile.consultation} />
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 5,
+                  justifyContent: 'space-around',
+                  paddingVertical: 10,
+                }}>
+                <TextComponent type={FontType.BOLD} style={{fontSize: 14}}>
+                  Follow our instructions
+                </TextComponent>
+              </View>
+              <View
+                style={{
+                  flex: 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <IconComponent type={IconType.AntDesign} name="right" />
+              </View>
+            </View>
+          </Ripple>
+
+          {/* <View
             style={{
               // backgroundColor: Colors.red,
               marginTop: 20,
               paddingLeft: 10,
+              flex: 1,
             }}>
             <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
               We recommend
             </TextComponent>
-          </View>
+            <View style={{height: 100}}>
+              <LottieAnimation
+                file={LottieFile.washHand}
+              />
+            </View>
+          </View> */}
           {/* <View style={{height: 300}}>
             <LottieAnimation file={LottieFile.Istayathome} />
           </View> */}
