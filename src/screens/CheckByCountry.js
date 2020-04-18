@@ -385,11 +385,27 @@ export default class CheckByCountry extends Component {
               // justifyContent: 'center',
               //   backgroundColor: 'yellow',
             }}>
-            {activeMenu === names[0] ? (
+            <>
+              <View style={{flex:1, 
+                  opacity: activeMenu === names[0] ? 1 : 0,}}>
+                <India data={data} obj={obj} />
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  opacity: activeMenu === names[1] ? 1 : 0,
+                  zIndex: activeMenu === names[1] ? 1 : -1,
+                }}>
+                <Other />
+              </View>
+            </>
+            {/* {activeMenu === names[0] ? (
               <India data={data} obj={obj} />
             ) : (
               <Other />
-            )}
+            )} */}
           </ScrollView>
         </View>
         <View
