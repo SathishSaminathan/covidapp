@@ -72,20 +72,16 @@ const MyStack = ({navigation, style}) => {
         </Stack.Screen>
         <Stack.Screen
           name="CheckByCountry"
-          options={
-            {
-              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-            }
-          }>
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}>
           {(props) => <CheckByCountry {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name="WeRecommend"
-          options={
-            {
-              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-            }
-          }>
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}>
           {(props) => <WeRecommend {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
@@ -116,8 +112,8 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         labelStyle={styles.drawerLabel}
         style={styles.drawerItem}
-        label="Contact"
-        onPress={() => props.navigation.navigate('ContactUs')}
+        label="Check By Country"
+        onPress={() => props.navigation.navigate('CheckByCountry')}
         // icon={() => (
         //   <IconComponent
         //     name="home-outline"
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
     color: 'white',
     // marginLeft: -16,
     fontFamily: 'Proxima Nova Bold',
-    fontSize: 30,
+    fontSize: 25,
   },
   avatar: {
     borderRadius: 60,

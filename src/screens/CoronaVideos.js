@@ -1,15 +1,45 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import 'react-native-get-random-values';
+import {Text, View, FlatList} from 'react-native';
+import {WebView} from 'react-native-webview';
+
 import TextComponent from '../components/Shared/TextComponent';
 import {FontType} from '../constants/AppConstants';
+import {Colors} from '../constants/ThemeConstants';
 
-const videos = ['https://www.youtube.com/watch?v=8c_UJwLq8PI'];
+const videos = [
+  {link: '8c_UJwLq8PI'},
+  {link: 'lhYAxIc1xUc'},
+  {link: '8c_UJwLq8PI'},
+  {link: '8c_UJwLq8PI'},
+];
 
 const CoronaVideos = ({params}) => (
   <View style={{flex: 1}}>
     <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
       Corona related videos
     </TextComponent>
+    <FlatList
+      ItemSeparatorComponent={() => (
+        <View
+          style={{
+            height: 20,
+            width: '100%',
+            backgroundColor: Colors.transparent,
+          }}
+        />
+      )}
+      data={videos}
+      renderItem={({item}) => (
+        <WebView
+        //   javaScriptEnabled
+          style={{height: 250}}
+          source={{
+            uri: `https://www.youtube.com/embed/${item.link}?version=3&enablejsapi=1&rel=0&autoplay=1&showinfo=0&controls=1&modestbranding=0"`,
+          }}
+        />
+      )}
+    />
   </View>
 );
 
