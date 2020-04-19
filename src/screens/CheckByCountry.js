@@ -431,6 +431,7 @@ export default class CheckByCountry extends Component {
               borderRadius: 25,
               flexDirection: 'row',
               elevation: 10,
+              overflow: 'hidden',
             }}>
             {names.map((v, i) => (
               <TouchableNativeFeedback
