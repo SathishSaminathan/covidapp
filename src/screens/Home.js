@@ -104,7 +104,7 @@ export default class Home extends Component {
             // fillOpacity={0.5}
           />
         </Svg>
-        <View style={{paddingTop: '5%', paddingLeft: 20}}>
+        <View style={{paddingLeft: 20}}>
           <TextComponent
             style={{fontSize: 25, color: Colors.white}}
             type={FontType.BOLD}>

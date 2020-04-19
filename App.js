@@ -13,7 +13,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {MyStack} from './src/routes/StackNavigator';
 import LottieAnimation from './src/components/Shared/LottieAnimation';
 import {Colors} from './src/constants/ThemeConstants';
-import { DrawerNav } from './src/routes/DrawerNavigator';
+import {DrawerNav} from './src/routes/DrawerNavigator';
+
+// CN=Sathish Saminathan, OU=SkTech, O=SK, L=Tirupur, ST=Tamilnadu, C=IN
 
 const App = () => {
   const [Loaded, setLoaded] = useState(false);
@@ -21,7 +23,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
-    }, 1);
+    }, 6000);
   }, []);
   return (
     <View style={{flex: 1, backgroundColor: Colors.white}}>
