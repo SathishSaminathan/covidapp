@@ -20,7 +20,7 @@ const TextComponent = (props) => {
   };
   return (
     <Text
-      onPress={() => onPress && onPress()}
+      // onPress={() => onPress && onPress()}
       {...props}
       style={[
         {
