@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  TouchableNativeFeedback,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {startCase} from 'lodash';
@@ -194,7 +195,7 @@ const Other = () => {
     <View
       style={{
         width: '90%',
-        height: '55%',
+        height: '60%',
         alignSelf: 'center',
         borderRadius: 10,
         paddingTop: 20,
@@ -311,6 +312,7 @@ export default class CheckByCountry extends Component {
   getDistrictWise = () => {
     Axios.get('https://v1.api.covindia.com/district-date-total-data')
       .then((res) => {
+        // console.log('dataaaa', res.data);
         let lastFiveDays = Array(5)
           .fill('')
           .map((v, i) => moment().subtract(i, 'd').format('DD/MM/YYYY'));
@@ -325,6 +327,7 @@ export default class CheckByCountry extends Component {
         let availableDates = Object.keys(res.data);
         let moments = availableDates.map((d) => moment(d, dateFormat));
         let maxDate = moment.max(moments).format(dateFormat);
+        // console.log(maxDate)
         this.constructData(maxDate, res.data);
         // let keys = Object.keys(res.data);
         // let data = Object.values(res.data);
@@ -350,9 +353,13 @@ export default class CheckByCountry extends Component {
   };
 
   constructData = (date, data) => {
-    let todayData = data[moment().format('DD/MM/YYYY')];
+    // console.log('data', date, data)
+    let todayData = data[date];
     var arr = Object.keys(todayData).map(function (key) {
-      return {state: key, data: todayData[key]};
+      return {
+        state: key,
+        data: todayData[key],
+      };
     });
     // console.clear();
     let ArrayLength = arr.length;
@@ -360,7 +367,9 @@ export default class CheckByCountry extends Component {
 
     this.setState({
       data: {
-        data: arr.sort((a, b) => a.data.infected < b.data.infected),
+        data: arr.sort(
+          (a, b) => parseInt(b.data.infected) - parseInt(a.data.infected),
+        ),
         date,
       },
     });
@@ -424,32 +433,34 @@ export default class CheckByCountry extends Component {
               elevation: 10,
             }}>
             {names.map((v, i) => (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => this.setState({activeMenu: v})}
+              <TouchableNativeFeedback
                 key={i}
-                style={{
-                  flex: 5,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <View>
-                  <TextComponent
-                    style={[
-                      {
-                        color:
-                          activeMenu === v ? Colors.blue : Colors.themeBlack,
-                        fontSize: 18,
-                      },
-                      activeMenu === v && {
-                        textDecorationLine: 'underline',
-                      },
-                    ]}
-                    type={activeMenu === v ? FontType.BOLD : FontType.BOLD}>
-                    {startCase(v.toLowerCase())}
-                  </TextComponent>
+                onPress={() => this.setState({activeMenu: v})}>
+                <View
+                  // activeOpacity={0.8}
+                  style={{
+                    flex: 5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View>
+                    <TextComponent
+                      style={[
+                        {
+                          color:
+                            activeMenu === v ? Colors.blue : Colors.themeBlack,
+                          fontSize: 18,
+                        },
+                        activeMenu === v && {
+                          textDecorationLine: 'underline',
+                        },
+                      ]}
+                      type={activeMenu === v ? FontType.BOLD : FontType.BOLD}>
+                      {startCase(v.toLowerCase())}
+                    </TextComponent>
+                  </View>
                 </View>
-              </TouchableOpacity>
+              </TouchableNativeFeedback>
             ))}
           </View>
         </View>
