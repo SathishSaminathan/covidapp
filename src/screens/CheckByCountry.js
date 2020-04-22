@@ -360,6 +360,7 @@ const Other = () => {
     }),
   );
   const [Country, setCountry] = useState('Afghanistan');
+  const [Loading, setLoading] = useState(true);
   const [State, setState] = useState();
   useEffect(() => {
     getData(Country);
@@ -380,6 +381,7 @@ const Other = () => {
   const handleChange = (value) => {
     getData(value);
     setCountry(value);
+    setLoading(true)
   };
 
   const getData = (country) => {
@@ -390,6 +392,7 @@ const Other = () => {
           recovered: res.data.recovered.value,
           deaths: res.data.deaths.value,
         });
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -464,6 +467,18 @@ const Other = () => {
         <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
           {Country && `Across ${Country}`}
         </TextComponent>
+        {Loading && (
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              position: 'absolute',
+              width: '100%',
+            }}>
+            <ActivityIndicator size="small" color={Colors.blue} />
+          </View>
+        )}
         {State && (
           <View>
             {res.map((v, i) => (
