@@ -63,9 +63,13 @@ export default class Home extends Component {
         // console.log('Total users: ', querySnapshot.size);
         querySnapshot.forEach((doc) => {
           link.push(doc.data());
-          console.log('applink', link[0].link);
         });
-        this.setState({link: link[0].link});
+        if (link) {
+          if (link[0]) {
+            if (link[0].link) console.log('applink', link[0].link);
+            this.setState({link: link[0].link});
+          }
+        }
       });
 
     // Stop listening for updates when no longer required
