@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.sevaiapp"
+        applicationId "com.coronasevaiapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.sevaiapp;
+package com.coronasevaiapp;
 
 import com.facebook.react.ReactActivity;
 

@@ -1,4 +1,4 @@
-package com.sevaiapp;
+package com.coronasevaiapp;
 
 import android.app.Application;
 import android.content.Context;
