@@ -112,7 +112,7 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         labelStyle={styles.drawerLabel}
         style={styles.drawerItem}
-        label="Check By Country"
+        label="Check by country"
         onPress={() => props.navigation.navigate('CheckByCountry')}
         // icon={() => (
         //   <IconComponent

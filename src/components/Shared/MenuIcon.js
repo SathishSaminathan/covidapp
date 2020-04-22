@@ -15,7 +15,8 @@ const MenuIcon = ({navigation, onPress, back = false, title = null}) => (
       alignItems: 'center',
     }}>
     <TouchableOpacity
-      activeOpacity={1}
+      activeOpacity={0.8}
+      style={{height:"100%",justifyContent:'center'}}
       onPress={() => (onPress ? onPress() : navigation.openDrawer())}>
       {!back ? (
         <>

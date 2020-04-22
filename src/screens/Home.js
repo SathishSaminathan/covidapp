@@ -4,11 +4,15 @@ import {
   View,
   ScrollView,
   StatusBar,
+  Linking,
   TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
 import Svg, {Path} from 'react-native-svg';
+import firestore from '@react-native-firebase/firestore';
 import Ripple from 'react-native-material-ripple';
+import * as Animatable from 'react-native-animatable';
+import Share from 'react-native-share';
 import {startCase} from 'lodash';
 
 import {Colors} from '../constants/ThemeConstants';
@@ -27,6 +31,7 @@ import CoronaVideos from './CoronaVideos';
 import PMFundArea from './PMFundArea';
 import ButtonComponent from '../components/Shared/ButtonComponent';
 import Helpline from './Helpline';
+import WebView from 'react-native-webview';
 
 const values = [
   {name: 'recovered', icon: 'account-check-outline'},
@@ -45,11 +50,31 @@ export default class Home extends Component {
       deaths: null,
       updated: null,
       critical: null,
+      link: null,
     };
   }
 
   componentDidMount() {
     this.getGlobalData();
+    firestore()
+      .collection('applink')
+      .onSnapshot((querySnapshot) => {
+        let link = [];
+        // console.log('Total users: ', querySnapshot.size);
+        querySnapshot.forEach((doc) => {
+          link.push(doc.data());
+          console.log('applink', link[0].link);
+        });
+        this.setState({link: link[0].link});
+      });
+
+    // Stop listening for updates when no longer required
+    // firestore()
+    //   .collection('videos')
+    //   .add({link: 'Q-Iy7ccCpS4'})
+    //   .then(() => {
+    //     console.log('videos added!');
+    //   });
   }
 
   getGlobalData = () => {
@@ -81,11 +106,41 @@ export default class Home extends Component {
       });
   };
 
+  shareFuntion(link) {
+    const shareOptions = {
+      title: 'Sevai: Corona Updates',
+      message: `Get the latest updates on Corona by country wise, District wise.
+Lets Fight against COVID-19`,
+      url: link,
+      // social: Share.Social.WHATSAPP,
+    };
+    Share.isPackageInstalled('com.whatsapp').then(({isInstalled}) => {
+      if (isInstalled) {
+        Share.open(shareOptions);
+      } else {
+        Share.open(shareOptions);
+      }
+    });
+  }
+
   render() {
-    const {confirmed, recovered, deaths, updated, critical} = this.state;
+    const {confirmed, recovered, deaths, updated, critical, link} = this.state;
     return (
       <View style={{flex: 1, backgroundColor: Colors.blue}}>
         <MeniIcon {...this.props} />
+        {link && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{position: 'absolute', top: 20, right: 20}}
+            onPress={() => this.shareFuntion(link)}>
+            <IconComponent
+              type={IconType.MaterialCommunityIcons}
+              name="share-variant"
+              size={30}
+              color={Colors.white}
+            />
+          </TouchableOpacity>
+        )}
         <StatusBar
           backgroundColor={Colors.blue}
           barStyle="light-content"></StatusBar>
@@ -104,7 +159,7 @@ export default class Home extends Component {
             // fillOpacity={0.5}
           />
         </Svg>
-        <View style={{paddingLeft: 20}}>
+        <View style={{paddingLeft: 20, paddingBottom: 10}}>
           <TextComponent
             style={{fontSize: 25, color: Colors.white}}
             type={FontType.BOLD}>
@@ -123,10 +178,11 @@ export default class Home extends Component {
             </TextComponent>
           )}
         </View>
-        <ScrollView contentContainerStyle={{padding: 10, flexGrow: 1}}>
+        <ScrollView
+          contentContainerStyle={{padding: 10, flexGrow: 1, paddingTop: 0}}>
           <View
             style={{
-              marginTop: 10,
+              marginTop: 0,
               flexDirection: 'row',
               flexWrap: 'wrap',
               paddingTop: 10,
@@ -136,7 +192,9 @@ export default class Home extends Component {
               recovered &&
               deaths &&
               values.map((v, i) => (
-                <View
+                <Animatable.View
+                  animation="fadeIn"
+                  delay={i}
                   rippleContainerBorderRadius={borderRadius}
                   key={i}
                   style={{
@@ -189,7 +247,7 @@ export default class Home extends Component {
                       {currencyFormat(this.state[v.name])}
                     </TextComponent>
                   </View>
-                </View>
+                </Animatable.View>
               ))}
           </View>
           <View
