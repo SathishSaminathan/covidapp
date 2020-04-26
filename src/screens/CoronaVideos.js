@@ -25,13 +25,11 @@ class CoronaVideos extends Component {
 
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
-      console.log('this.focus');
       this.setState({
         ShowVideos: true,
       });
     });
     this.props.navigation.addListener('blur', () => {
-      console.log('this.blur');
       this.setState({
         ShowVideos: false,
       });
@@ -43,7 +41,6 @@ class CoronaVideos extends Component {
         // console.log('Total users: ', querySnapshot.size);
         querySnapshot.forEach((doc) => {
           Videos.push(doc.data());
-          console.log('video', Videos);
         });
         this.setState({Videos});
       });
