@@ -19,10 +19,23 @@ class CoronaVideos extends Component {
     super(props);
     this.state = {
       Videos: null,
+      ShowVideos: false,
     };
   }
 
   componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      console.log('this.focus');
+      this.setState({
+        ShowVideos: true,
+      });
+    });
+    this.props.navigation.addListener('blur', () => {
+      console.log('this.blur');
+      this.setState({
+        ShowVideos: false,
+      });
+    });
     firestore()
       .collection('videos')
       .onSnapshot((querySnapshot) => {
@@ -44,8 +57,8 @@ class CoronaVideos extends Component {
     //   });
   }
   render() {
-    const {Videos} = this.state;
-    return (
+    const {Videos, ShowVideos} = this.state;
+    return ShowVideos ? (
       <View style={{flex: 1}}>
         <TextComponent style={{fontSize: 20}} type={FontType.BOLD}>
           Corona related videos
@@ -75,7 +88,7 @@ class CoronaVideos extends Component {
           />
         )}
       </View>
-    );
+    ) : null;
   }
 }
 

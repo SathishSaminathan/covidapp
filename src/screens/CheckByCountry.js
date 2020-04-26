@@ -282,10 +282,7 @@ const India = ({data = null, obj = null}) => {
               type={FontType.BOLD}>
               {Data.date}
             </TextComponent>
-            <TextComponent type={FontType.BOLD} style={{paddingHorizantal: 10}}>
-              {' '}
-              -{' '}
-            </TextComponent>
+            <TextComponent type={FontType.BOLD}> - </TextComponent>
             <TextComponent type={FontType.BOLD}>District wise</TextComponent>
           </View>
           <View style={{flex: 1, flexDirection: 'row'}}>
@@ -381,7 +378,7 @@ const Other = () => {
   const handleChange = (value) => {
     getData(value);
     setCountry(value);
-    setLoading(true)
+    setLoading(true);
   };
 
   const getData = (country) => {
