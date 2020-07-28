@@ -22,7 +22,8 @@ import IconComponent from '../components/Shared/IconComponent';
 import MenuIcon from '../components/Shared/MenuIcon';
 import moment from 'moment';
 
-const names = ['INDIA', 'OTHER'];
+// const names = ['INDIA', 'OTHER'];
+const names = ['OTHER'];
 
 const dateFormat = 'DD/MM/YYYY';
 
@@ -356,7 +357,7 @@ const Other = () => {
       return {label: country.name, value: country.name};
     }),
   );
-  const [Country, setCountry] = useState('Afghanistan');
+  const [Country, setCountry] = useState('India');
   const [Loading, setLoading] = useState(true);
   const [State, setState] = useState();
   useEffect(() => {
@@ -619,16 +620,16 @@ export default class CheckByCountry extends Component {
               //   backgroundColor: 'yellow',
             }}>
             <>
-              <View style={{flex: 1, opacity: activeMenu === names[0] ? 1 : 0}}>
+              {/* <View style={{flex: 1, opacity: activeMenu === names[0] ? 1 : 0}}>
                 <India data={data} obj={obj} />
-              </View>
+              </View> */}
               <View
                 style={{
                   position: 'absolute',
                   width: '100%',
                   height: '100%',
-                  opacity: activeMenu === names[1] ? 1 : 0,
-                  zIndex: activeMenu === names[1] ? 1 : -1,
+                  opacity: activeMenu === names[0] ? 1 : 0,
+                  zIndex: activeMenu === names[0] ? 1 : -1,
                 }}>
                 <Other />
               </View>

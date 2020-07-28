@@ -378,9 +378,9 @@ Lets Fight against COVID-19`,
               </View>
             </View>
           </Ripple>
-          {/* <View style={{padding: 10}}>
+          <View style={{padding: 10}}>
             <CoronaVideos {...this.props} />
-          </View> */}
+          </View>
           <View style={{padding: 10}}>
             <Helpline />
           </View>
